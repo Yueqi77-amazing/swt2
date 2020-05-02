@@ -30,16 +30,16 @@ import java.util.ResourceBundle;
 public class Messages implements Serializable {
   private static final long serialVersionUID = -3129495340668876130L;
 
-  private final String   BUNDLE_NAME = "org.jis.messages";
+  private final String   bundlename = "org.jis.messages";
 
-  private ResourceBundle RESOURCE_BUNDLE;
+  private ResourceBundle resourcebundle;
 
   /**
    * @param l
    *          the locale to use the correct resource bundle
    */
   public Messages(Locale l) {
-    RESOURCE_BUNDLE = ResourceBundle.getBundle(BUNDLE_NAME, l);
+	  resourcebundle = ResourceBundle.getBundle(bundlename, l);
   }
 
   /**
@@ -47,15 +47,11 @@ public class Messages implements Serializable {
    *          the message key
    * @return returns the message of the specified language
    */
-  public String getString(String key)
-  {
-    try
-    {
-      return RESOURCE_BUNDLE.getString(key);
-    }
-    catch (MissingResourceException e)
-    {
-      e.printStackTrace();
+  public String getString(String key) {
+    try {
+      return resourcebundle.getString(key);
+    } catch (MissingResourceException e) { 
+    	e.printStackTrace();
       return '!' + key + '!';
     }
   }
