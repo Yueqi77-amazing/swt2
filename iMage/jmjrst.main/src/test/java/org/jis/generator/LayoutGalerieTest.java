@@ -120,5 +120,90 @@ public class LayoutGalerieTest {
 		fromFile.delete();
 		toFile.delete();
 	}
+	/**
+	 * question a2 e)
+	 */
+	@Test
+	public final void testCopy() {
+
+		galerieUnderTest = new LayoutGalerie(null, null);
+		
+		try {
+			final File resourceFolder = new File(this.getClass().getResource(File.separator).toURI());
+			fromFile = new File(resourceFolder, "from");
+			toFile = new File("/Users/apple/Desktop/swt2/iMage/jmjrst.main/src/test/resources/testCopy");
+			
+			byte[] array = new byte[10];
+			new Random().nextBytes(array);
+			String randomString = new String(array);
+		 			 
+			fromFile.createNewFile();
+			Path fromPath = FileSystems.getDefault().getPath(fromFile.getPath());
+			Files.writeString(fromPath, randomString);
+			 
+			galerieUnderTest.copyFile(fromFile, toFile);
+			 
+			assertTrue(toFile.exists());
+			 
+			Path toPath = FileSystems.getDefault().getPath(toFile.getPath());
+			String contents = Files.readString(toPath);
+			 
+		
+			assertEquals(randomString, contents);
+		 }
+		 catch (IOException | URISyntaxException e) {
+			fail();
+		 }
+		fromFile.delete();
+		toFile.delete();
+		
+	}
+
+	/**
+	 * question a2 e)
+	 * @throws URISyntaxException 
+	 * @throws IOException 
+	 */
+	@Test(expected = IOException.class)
+	public final void testCopy1() throws URISyntaxException, IOException {
+
+		galerieUnderTest = new LayoutGalerie(null, null);
+		
+		
+			final File resourceFolder = new File(this.getClass().getResource(File.separator).toURI());
+			fromFile = new File("/Users/apple/Desktop/swt2/iMage/jmjrst.main/src/test/resources/testCopy");
+			toFile = new File(resourceFolder,"to");
+			 Path pt = Paths.get("testCopy");  
+		        FileChannel fc = FileChannel.open(pt, StandardOpenOption.WRITE,  
+		StandardOpenOption.APPEND);  
+		        //System.out.println("File channel is open for write and Acquiring lock...");  
+		        fc.position(fc.size() - 1);
+		        FileLock lock = fc.lock();
+
+
+
+			galerieUnderTest.copyFile(fromFile, toFile);
+			 
+			assertTrue(toFile.exists());
+			Path fromPath = FileSystems.getDefault().getPath(fromFile.getPath());
+			String source = Files.readString(fromPath);
+			Path toPath = FileSystems.getDefault().getPath(toFile.getPath());
+			String contents = Files.readString(toPath);
+			 
+		
+			assertEquals(source, contents);
+		 
+		
+		fromFile.delete();
+		toFile.delete();
+		
+	}
 }
+
+
+
+
+
+
+
 	
