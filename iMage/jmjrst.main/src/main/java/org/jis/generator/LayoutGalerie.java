@@ -552,6 +552,10 @@ public class LayoutGalerie {
     in = new BufferedInputStream(new FileInputStream(file));
     out = new BufferedOutputStream(new FileOutputStream(ziel, true));
     int bytes = 0;
+    if(ziel.exists() && file.length() != 0){
+    	clearInfoForFile(ziel);
+    }
+
     while ((bytes = in.read()) != -1)
     {
       out.write(bytes);
@@ -559,6 +563,22 @@ public class LayoutGalerie {
     in.close();
     out.close();
   }
+  /**
+   * question a2 e)
+   * to clear the information of the target file.
+   * @param file
+   * @throws IOException
+   */
+  public static void clearInfoForFile(File file) throws IOException {
+	  
+	  
+	  FileWriter fileWriter =new FileWriter(file);
+	  fileWriter.write("");
+	  fileWriter.flush();
+	  fileWriter.close();
+	  
+  }
+	
   
   private String createTitle(String filename)
   {
