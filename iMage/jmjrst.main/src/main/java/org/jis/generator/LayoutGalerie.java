@@ -577,6 +577,8 @@ public class LayoutGalerie {
 	  fileWriter.close();
 	  
   }
+  
+  
   private String createTitle(String filename)
   {
     filename = filename.substring(0, filename.lastIndexOf("."));
